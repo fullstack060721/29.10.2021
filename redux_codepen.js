@@ -6,30 +6,28 @@ function printobj(obj) {
 }
 
 const {createStore} = Redux;
-const init_state = { name: 'itay', time: new Date(), posts: [] }
+const init_state = { name: 'itay', time: new Date(), garage: [] }
 //print(createStore)
 
 function myReducer(state = init_state, action) {
-  print('------- in reducer ------- ')
-  print(' state (before update): ')
+  print('-------- in my reducer ----------- <br />')
+  print('state: ')
   printobj(state)
-  print(' action: ')
+  print('action: ')
   printobj(action)
-  if (action.type == 'ADD_POST') {
-    // returns state
+  if (action.type === 'ADD_CAR') {
     return {
-      ...state,
-      posts: [...state.posts, action.post]
+      ... state,
+      garage: [...state.garage, action.car]
     }
   }
   return state;
 }
 
-const store = createStore(myReducer)
+const store = createStore(myReducer);
 store.subscribe(() => {
-  print('store event occured ... new state: ')
+  print('store event occured ... current state: ')
   printobj(store.getState())
 })
-
-store.dispatch( {type: 'ADD_POST', post: 'NICE POST'})
-store.dispatch( {type: 'ADD_POST', post: 'NICE POST 2'})
+store.dispatch( { type: 'ADD_CAR', car: { id: '87-123-22', model: 'Honda'}} );
+store.dispatch( { type: 'ADD_CAR', car: { id: '11-333-44', model: 'Renault'}} );
